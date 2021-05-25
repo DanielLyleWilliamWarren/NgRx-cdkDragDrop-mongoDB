@@ -11,10 +11,16 @@ import { ToDoTaskReducer } from './store/reducers/toDo.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
+import { TablesComponent } from './tables/tables.component'
 
+const routes: Routes = [{ path: 'home', component: TablesComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },]
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +33,8 @@ import { MatButtonModule } from '@angular/material/button';
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     BrowserAnimationsModule,
+    AppRoutingModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]
