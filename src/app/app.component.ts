@@ -1,7 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import { v4 as uuid } from 'uuid';
 import { AddDoneItemAction, DeleteDoneItemAction } from './store/actions/done-task.action';
@@ -20,21 +19,6 @@ export class AppComponent implements OnInit {
   public doneItems: Array<TaskItem>;
   public newToDoTaskItem: TaskItem = { id: '', name: '' };
   public newDoneTaskItem: TaskItem = { id: '', name: '' };
-
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
-
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
 
   constructor(private store: Store<AppState>) { }
 
