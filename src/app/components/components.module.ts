@@ -14,6 +14,8 @@ import { TutorialDetailsComponent } from './tutorial-details/tutorial-details.co
 import { TutorialListComponent } from './tutorial-list/tutorial-list.component';
 import { TablesComponent } from '../tables/tables.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -36,6 +38,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DragDropModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
   ],
 })
 export class ComponentsModule { }

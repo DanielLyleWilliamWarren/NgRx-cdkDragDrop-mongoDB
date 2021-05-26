@@ -22,7 +22,8 @@
     <div class="example-box" *ngFor="let item of doneItems" cdkDrag>{{item.name}} <button mat-mini-fab
         (click)="deleteToDoItem(item.id)">
         X
-      </button> </div>
+      </button>
+    </div>
   </div>
 
   <form (ngSubmit)="addDoneItem()">
