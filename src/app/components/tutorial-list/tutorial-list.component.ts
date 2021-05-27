@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Tutorial } from 'src/app/models/tutorial.model';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { Employee } from 'src/app/models/employee.model';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-tutorial-list',
@@ -9,22 +9,22 @@ import { TutorialService } from 'src/app/services/tutorial.service';
 })
 export class TutorialListComponent implements OnInit {
 
-  tutorials?: Tutorial[];
-  currentTutorial?: Tutorial;
-  currentIndex = -1;
-  title = '';
+  public employees?: Array<Employee>;
+  public currentEmployee?: Employee;
+  public currentIndex = -1;
+  public firstName = '';
 
-  constructor(private tutorialService: TutorialService) { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.retrieveTutorials();
+    this.retrieveEmployees();
   }
 
-  retrieveTutorials(): void {
-    this.tutorialService.getAll()
+  public retrieveEmployees(): void {
+    this.employeeService.getAll()
       .subscribe(
         data => {
-          this.tutorials = data;
+          this.employees = data;
           console.log(data);
         },
         error => {
@@ -32,19 +32,19 @@ export class TutorialListComponent implements OnInit {
         });
   }
 
-  refreshList(): void {
-    this.retrieveTutorials();
-    this.currentTutorial = undefined;
+  public refreshList(): void {
+    this.retrieveEmployees();
+    this.currentEmployee = undefined;
     this.currentIndex = -1;
   }
 
-  setActiveTutorial(tutorial: Tutorial, index: number): void {
-    this.currentTutorial = tutorial;
+  public setActiveEmployee(employee: Employee, index: number): void {
+    this.currentEmployee = employee;
     this.currentIndex = index;
   }
 
-  removeAllTutorials(): void {
-    this.tutorialService.deleteAll()
+  public removeAllEmployees(): void {
+    this.employeeService.deleteAll()
       .subscribe(
         response => {
           console.log(response);
@@ -55,11 +55,11 @@ export class TutorialListComponent implements OnInit {
         });
   }
 
-  searchTitle(): void {
-    this.tutorialService.findByTitle(this.title)
+  public searchFirstName(): void {
+    this.employeeService.findByFirstName(this.firstName)
       .subscribe(
         data => {
-          this.tutorials = data;
+          this.employees = data;
           console.log(data);
         },
         error => {

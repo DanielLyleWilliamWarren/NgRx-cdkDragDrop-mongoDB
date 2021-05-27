@@ -1,14 +1,16 @@
 <div class="example-container">
-  <h2>To Do List</h2>
-  <div cdkDropList #toDoItemList="cdkDropList" [cdkDropListData]="toDoItems" [cdkDropListConnectedTo]="[doneItemList]"
-    class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of toDoItems" cdkDrag>{{item.name}} <button mat-mini-fab
-        (click)="deleteToDoItem(item.id)">
+  <h2>Un Seated Employee List</h2>
+  <div cdkDropList #toDoItemList="cdkDropList" [cdkDropListData]="unSeatedEmployees"
+    [cdkDropListConnectedTo]="[doneItemList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let employee of unSeatedEmployees" cdkDrag>{{employee.firstName}}
+      {{employee.surname}}<button mat-mini-fab (click)="deleteUnSeatedEmployee(employee.id)">
         X
       </button></div>
   </div>
-  <form (ngSubmit)="addToDoItem()">
-    <input type="text" [(ngModel)]="newToDoTaskItem.name" placeholder="Item" name="toDoItemName" />
+  <form (ngSubmit)="addUnSeatedEmployee()">
+    <input type="text" [(ngModel)]="newUnSeatedEmployee.firstName" placeholder="Item"
+      name="unSeatedEmployeeFirstName" />
+    <input type="text" [(ngModel)]="newUnSeatedEmployee.surname" placeholder="Item" name="unSeatedEmployeeSurname" />
     <button type="submit">+</button>
   </form>
 </div>
@@ -17,17 +19,18 @@
 
 <div class="example-container">
   <h2>Done List</h2>
-  <div cdkDropList #doneItemList="cdkDropList" [cdkDropListData]="doneItems" [cdkDropListConnectedTo]="[toDoItemList]"
-    class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of doneItems" cdkDrag>{{item.name}} <button mat-mini-fab
-        (click)="deleteToDoItem(item.id)">
+  <div cdkDropList #doneItemList="cdkDropList" [cdkDropListData]="seatedEmployees"
+    [cdkDropListConnectedTo]="[toDoItemList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let employee of seatedEmployees" cdkDrag>{{employee.firstName}} {{employee.surname}}
+      Seat: {{employee.seat}}
+      <button mat-mini-fab (click)="deleteSeatedEmployee(employee.id)">
         X
       </button>
     </div>
   </div>
 
-  <form (ngSubmit)="addDoneItem()">
+  <!-- <form (ngSubmit)="addDoneItem()">
     <input type="text" [(ngModel)]="newDoneTaskItem.name" placeholder="Item" name="doneItemName" />
     <button type="submit">+</button>
-  </form>
+  </form> -->
 </div>

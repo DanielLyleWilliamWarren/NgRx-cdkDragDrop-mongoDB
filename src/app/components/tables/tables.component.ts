@@ -1,11 +1,11 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
-import { AddDoneItemAction, DeleteDoneItemAction } from '../../store/actions/done-task.action';
-import { AddToDoItemAction, DeleteToDoItemAction } from '../../store/actions/todo-task.actions';
-import { AppState } from '../../store/models/app-state.model';
-import { TaskItem } from '../../store/models/task-item.model';
 import { v4 as uuid } from 'uuid';
+import { Employee } from 'src/app/models/employee.model';
+import { AppState } from 'src/app/store/models/app-state.model';
+import { AddUnSeatedEmployeeAction, DeleteUnSeatedEmployeeAction } from 'src/app/store/actions/todo-task.actions';
+import { DeleteSeatedEmployeeAction } from 'src/app/store/actions/done-task.action';
 
 @Component({
   selector: 'app-tables',
@@ -14,49 +14,52 @@ import { v4 as uuid } from 'uuid';
 })
 export class TablesComponent implements OnInit {
 
-  public toDoItems: Array<TaskItem>;
-  public doneItems: Array<TaskItem>;
-  public newToDoTaskItem: TaskItem = { id: '', name: '' };
-  public newDoneTaskItem: TaskItem = { id: '', name: '' };
+  public unSeatedEmployees: Array<Employee>;
+  public seatedEmployees: Array<Employee>;
+  public newUnSeatedEmployee: Employee = { id: '', firstName: '', surname: '', seat: null, };
+  // public newDoneTaskItem: Employee = { id: '', name: '' };
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.store.select(store => store.toDo).subscribe((data: Array<TaskItem>) => {
-      this.toDoItems = data.map(obj => ({
+    // console.debug(this.store.select(store => store.unSeated))
+    this.store.select(store => store.unSeated).subscribe((data: Array<Employee>) => {
+      // console.debug('data:', data)
+      this.unSeatedEmployees = data.map(obj => ({
         ...obj
       }));
     });
-    this.store.select(store => store.done).subscribe((data: Array<TaskItem>) => {
-      this.doneItems = data.map(obj => ({
+    this.store.select(store => store.seated).subscribe((data: Array<Employee>) => {
+      // console.debug('data:', data)
+      this.seatedEmployees = data.map(obj => ({
         ...obj
       }));
     });
   }
 
-  public addToDoItem() {
-    this.newToDoTaskItem.id = uuid();
+  public addUnSeatedEmployee() {
+    this.newUnSeatedEmployee.id = uuid();
 
-    this.store.dispatch(new AddToDoItemAction(this.newToDoTaskItem));
+    this.store.dispatch(new AddUnSeatedEmployeeAction(this.newUnSeatedEmployee));
 
-    this.newToDoTaskItem = { id: '', name: '' };
+    this.newUnSeatedEmployee = { id: '', firstName: '', surname: '' };
   }
 
-  public deleteToDoItem(id: string) {
+  public deleteUnSeatedEmployee(id: string) {
     console.debug('call');
-    this.store.dispatch(new DeleteToDoItemAction(id));
+    this.store.dispatch(new DeleteUnSeatedEmployeeAction(id));
   }
 
-  public addDoneItem() {
-    this.newDoneTaskItem.id = uuid();
+  // public addDoneItem() {
+  //   this.newDoneTaskItem.id = uuid();
 
-    this.store.dispatch(new AddDoneItemAction(this.newDoneTaskItem));
+  //   this.store.dispatch(new AddDoneItemAction(this.newDoneTaskItem));
 
-    this.newDoneTaskItem = { id: '', name: '' };
-  }
+  //   this.newDoneTaskItem = { id: '', name: '' };
+  // }
 
-  public deleteDoneItem(id: string) {
-    this.store.dispatch(new DeleteDoneItemAction(id));
+  public deleteSeatedEmployee(id: string) {
+    this.store.dispatch(new DeleteSeatedEmployeeAction(id));
   }
 
   public drop(event: CdkDragDrop<Array<string>>) {

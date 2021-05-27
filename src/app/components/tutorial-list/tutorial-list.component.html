@@ -1,9 +1,9 @@
 <div class="list row">
   <div class="col-md-8">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="title" />
+      <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="firstName" />
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchFirstName()">
           Search
         </button>
       </div>
@@ -12,39 +12,38 @@
   <div class="col-md-6">
     <h4>Tutorials List</h4>
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let tutorial of tutorials; let i = index" [class.active]="i == currentIndex"
-        (click)="setActiveTutorial(tutorial, i)">
-        {{ tutorial.title }}
+      <li class="list-group-item" *ngFor="let employee of employees; let i = index" [class.active]="i == currentIndex"
+        (click)="setActiveEmployee(employee, i)">
+        {{ employee.firstName }} {{ employees.surname }}
       </li>
     </ul>
 
-    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllTutorials()">
+    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllEmployees()">
       Remove All
     </button>
   </div>
   <div class="col-md-6">
-    <div *ngIf="currentTutorial">
-      <h4>Tutorial</h4>
+    <div *ngIf="currentEmployee">
+      <h4>Employee</h4>
       <div>
-        <label><strong>Title:</strong></label> {{ currentTutorial.title }}
+        <label><strong>First Name:</strong></label> {{ currentEmployee.firstName }}
       </div>
       <div>
-        <label><strong>Description:</strong></label>
-        {{ currentTutorial.description }}
+        <label><strong>Surname:</strong></label>
+        {{ currentEmployee.surname }}
       </div>
       <div>
-        <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
+        <label><strong>Seat:</strong></label>
+        {{ currentEmployee.seat }}
       </div>
-
-      <a mat-raised-button class="badge badge-warning" routerLink="/tutorials/{{ currentTutorial.id }}">
+      <a mat-raised-button class="badge badge-warning" routerLink="/employees/{{ currentEmployee.id }}">
         Edit
       </a>
     </div>
 
-    <div *ngIf="!currentTutorial">
+    <div *ngIf="!currentEmployee">
       <br />
-      <p>Please click on a Tutorial...</p>
+      <p>Please click on an Employee...</p>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Tutorial } from 'src/app/models/tutorial.model';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { Employee } from 'src/app/models/employee.model';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-add-tutorial',
@@ -9,25 +9,26 @@ import { TutorialService } from 'src/app/services/tutorial.service';
 })
 export class AddTutorialComponent implements OnInit {
 
-  public tutorial: Tutorial = {
-    title: '',
-    description: '',
-    published: false
+  public employee: Employee = {
+    firstName: '',
+    surname: '',
+    seat: null,
   };
   submitted = false;
 
-  constructor(private tutorialService: TutorialService) { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
   }
 
-  saveTutorial(): void {
+  public saveEmployee(): void {
     const data = {
-      title: this.tutorial.title,
-      description: this.tutorial.description
+      firstName: this.employee.firstName,
+      surname: this.employee.surname,
+      seat: this.employee.seat,
     };
 
-    this.tutorialService.create(data)
+    this.employeeService.create(data)
       .subscribe(
         response => {
           console.log(response);
@@ -38,12 +39,12 @@ export class AddTutorialComponent implements OnInit {
         });
   }
 
-  newTutorial(): void {
+  public newEmployee(): void {
     this.submitted = false;
-    this.tutorial = {
-      title: '',
-      description: '',
-      published: false
+    this.employee = {
+      firstName: '',
+      surname: '',
+      seat: null,
     };
   }
 

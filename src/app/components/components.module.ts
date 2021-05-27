@@ -5,17 +5,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTutorialComponent } from './add-tutorial/add-tutorial.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
-import { ToDoTaskReducer } from '../store/reducers/toDo.reducer';
-import { DoneTaskReducer } from '../store/reducers/done.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
 import { TutorialDetailsComponent } from './tutorial-details/tutorial-details.component';
 import { TutorialListComponent } from './tutorial-list/tutorial-list.component';
-import { TablesComponent } from '../tables/tables.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { TablesComponent } from './tables/tables.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { unSeatedEmployeeReducer } from '../store/reducers/toDo.reducer';
+import { seatedEmployeeReducer } from '../store/reducers/done.reducer';
 
 
 
@@ -27,12 +27,12 @@ import { RouterModule } from '@angular/router';
     TutorialListComponent,
   ],
   imports: [
-    FormsModule,
     StoreModule.forRoot({
-      toDo: ToDoTaskReducer,
-      done: DoneTaskReducer
+      unSeated: unSeatedEmployeeReducer,
+      seated: seatedEmployeeReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    FormsModule,
     CommonModule,
     BrowserModule,
     DragDropModule,

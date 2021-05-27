@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-const baseUrl = 'http://localhost:8080/api/tutorials';
+const baseUrl = 'http://localhost:8080/api/employees';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TutorialService {
+export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
@@ -35,7 +35,7 @@ export class TutorialService {
     return this.http.delete(baseUrl);
   }
 
-  findByTitle(title): Observable<any> {
-    return this.http.get(`${baseUrl}?title=${title}`);
+  findByFirstName(firstName): Observable<any> {
+    return this.http.get(`${baseUrl}?title=${firstName}`);
   }
 }

@@ -1,21 +1,21 @@
 import { Action } from '@ngrx/store';
-import { TaskItem } from '../models/task-item.model';
+import { Employee } from 'src/app/models/employee.model';
 
-export enum ToDoTaskActionTypes {
-  ADD_ITEM = '[TODO-LIST] Add Item',
-  DELETE_ITEM = '[TODO-LIST] Delete Item',
+export enum UnSeatedEmployeeActionType {
+  ADD_ITEM = '[UNSEATED-LIST] Add Item',
+  DELETE_ITEM = '[UNSEATED-LIST] Delete Item',
 }
 
-export class AddToDoItemAction implements Action {
-  readonly type = ToDoTaskActionTypes.ADD_ITEM;
+export class AddUnSeatedEmployeeAction implements Action {
+  readonly type = UnSeatedEmployeeActionType.ADD_ITEM;
 
-  constructor(public payload: TaskItem) { }
+  constructor(public payload: Employee) { }
 }
 
-export class DeleteToDoItemAction implements Action {
-  readonly type = ToDoTaskActionTypes.DELETE_ITEM;
+export class DeleteUnSeatedEmployeeAction implements Action {
+  readonly type = UnSeatedEmployeeActionType.DELETE_ITEM;
 
   constructor(public payload: string) { }
 }
 
-export type ToDoTaskAction = AddToDoItemAction | DeleteToDoItemAction;
+export type UnSeatedEmployeeAction = AddUnSeatedEmployeeAction | DeleteUnSeatedEmployeeAction;

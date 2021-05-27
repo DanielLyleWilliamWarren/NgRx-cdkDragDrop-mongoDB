@@ -1,18 +1,20 @@
-import { DoneTaskAction, DoneTaskActionTypes } from '../actions/done-task.action';
-import { TaskItem } from '../models/task-item.model';
+import { Employee } from 'src/app/models/employee.model';
+import { SeatedEmployeeAction, SeatedEmployeeActionType } from '../actions/done-task.action';
 
-const initialState: Array<TaskItem> = [
+const initialState: Array<Employee> = [
   {
     id: "1775935f-36fd-467e-a667-09f95b917f6d",
-    name: 'Walk Dog',
+    firstName: 'Daniel',
+    surname: 'Warren',
+    seat: 1,
   }
 ];
 
-export function DoneTaskReducer(state: Array<TaskItem> = initialState, action: DoneTaskAction) {
+export function seatedEmployeeReducer(state: Array<Employee> = initialState, action: SeatedEmployeeAction) {
   switch (action.type) {
-    case DoneTaskActionTypes.ADD_ITEM:
+    case SeatedEmployeeActionType.ADD_ITEM:
       return [...state, action.payload];
-    case DoneTaskActionTypes.DELETE_ITEM:
+    case SeatedEmployeeActionType.DELETE_ITEM:
       return state.filter(item => item.id !== action.payload);
     default:
       return state;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Tutorial } from 'src/app/models/tutorial.model';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { Employee } from 'src/app/models/employee.model';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-tutorial-details',
@@ -10,28 +10,28 @@ import { TutorialService } from 'src/app/services/tutorial.service';
 })
 export class TutorialDetailsComponent implements OnInit {
 
-  currentTutorial: Tutorial = {
-    title: '',
-    description: '',
-    published: false
+  currentEmployee: Employee = {
+    firstName: '',
+    surname: '',
+    seat: null,
   };
   message = '';
 
   constructor(
-    private tutorialService: TutorialService,
+    private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
     this.message = '';
-    this.getTutorial(this.route.snapshot.params.id);
+    this.getEmployee(this.route.snapshot.params.id);
   }
 
-  getTutorial(id: string): void {
-    this.tutorialService.get(id)
+  getEmployee(id: string): void {
+    this.employeeService.get(id)
       .subscribe(
         data => {
-          this.currentTutorial = data;
+          this.currentEmployee = data;
           console.log(data);
         },
         error => {
@@ -39,17 +39,27 @@ export class TutorialDetailsComponent implements OnInit {
         });
   }
 
-  updatePublished(status: boolean): void {
-    const data = {
-      title: this.currentTutorial.title,
-      description: this.currentTutorial.description,
-      published: status
-    };
+  // updateSeatNumber(seat: number): void {
+  //   const data = {
+  //     firstName: this.currentEmployee.firstName,
+  //     surname: this.currentEmployee.surname,
+  //   };
 
-    this.tutorialService.update(this.currentTutorial.id, data)
+  //   this.employeeService.update(this.currentEmployee.id, data)
+  //     .subscribe(
+  //       response => {
+  //         console.log(response);
+  //         this.message = response.message;
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       });
+  // }
+
+ public updateEmployee(): void {
+   this.employeeService.update(this.currentEmployee.id, this.currentEmployee)
       .subscribe(
         response => {
-          this.currentTutorial.published = status;
           console.log(response);
           this.message = response.message;
         },
@@ -58,24 +68,12 @@ export class TutorialDetailsComponent implements OnInit {
         });
   }
 
-  updateTutorial(): void {
-    this.tutorialService.update(this.currentTutorial.id, this.currentTutorial)
+ public deleteEmployee(): void {
+   this.employeeService.delete(this.currentEmployee.id)
       .subscribe(
         response => {
           console.log(response);
-          this.message = response.message;
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  deleteTutorial(): void {
-    this.tutorialService.delete(this.currentTutorial.id)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/tutorials']);
+          this.router.navigate(['/employees']);
         },
         error => {
           console.log(error);
