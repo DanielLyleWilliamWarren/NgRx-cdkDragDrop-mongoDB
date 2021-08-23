@@ -43,7 +43,7 @@
 
 
 <div class="example-container">
-  <h2>Done List</h2>
+  <h2>Seated List</h2>
   <div cdkDropList #doneItemList="cdkDropList" [cdkDropListData]="seatedEmployees"
     [cdkDropListConnectedTo]="[toDoItemList]" class="example-list" (cdkDropListDropped)="drop($event)">
     <div class="example-box" *ngFor="let employee of seatedEmployees; let i = index" cdkDrag>{{employee.firstName}} {{employee.surname}}

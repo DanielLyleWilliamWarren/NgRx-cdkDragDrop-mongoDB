@@ -20,6 +20,7 @@ export class TablesComponent implements OnInit {
   public seatedEmployees: Array<Employee>;
   public newUnSeatedEmployee: Employee = { id: '', firstName: '', surname: '', seat: null, };
 
+  public message = '';
   submitted = false;
 
   constructor(
@@ -29,6 +30,11 @@ export class TablesComponent implements OnInit {
 
   ngOnInit() {
     this.retrieveEmployees();
+    if (null == this.seatedEmployees) {
+      this.seatedEmployees = [];
+    }
+
+    console.debug('call', this.seatedEmployees);
     // this.store.select(store => store.unSeated).subscribe((data: Array<Employee>) => {
     //   this.unSeatedEmployees = data.map(obj => ({
     //     ...obj
@@ -97,11 +103,30 @@ export class TablesComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      console.debug('current', event.container.data);
+      console.debug('previous', event.previousContainer);
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
     }
+    const employees = event.container.data as Array<Employee>;
+    this.updateEmployees(employees);
+  }
+
+  public updateEmployees(employees: Array<Employee>): void {
+    employees.forEach((employee: Employee, index: number) => {
+      employee.seat = index + 1;
+      this.employeeService.update(employee.id, employee)
+        .subscribe(
+          response => {
+            console.log(response);
+            this.message = response.message;
+          },
+          error => {
+            console.log(error);
+          });
+    });
   }
 
 
