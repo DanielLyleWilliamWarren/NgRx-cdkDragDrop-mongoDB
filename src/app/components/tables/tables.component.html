@@ -1,3 +1,28 @@
+
+<!-- <div>
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="title">First name</label>
+        <input type="text" class="form-control" id="firstName" required [(ngModel)]="employee.firstName"
+          name="firstName" />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Surname</label>
+        <input class="form-control" id="surname" required [(ngModel)]="employee.surname" name="surname" />
+      </div>
+
+      <button mat-raised-button (click)="saveEmployee()" class="btn btn-success">Submit</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>Tutorial was submitted successfully!</h4>
+      <button class="btn btn-success" (click)="newEmployee()">Add</button>
+    </div>
+  </div>
+</div> -->
+
 <div class="example-container">
   <h2>Un Seated Employee List</h2>
   <div cdkDropList #toDoItemList="cdkDropList" [cdkDropListData]="unSeatedEmployees"
@@ -21,8 +46,8 @@
   <h2>Done List</h2>
   <div cdkDropList #doneItemList="cdkDropList" [cdkDropListData]="seatedEmployees"
     [cdkDropListConnectedTo]="[toDoItemList]" class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let employee of seatedEmployees" cdkDrag>{{employee.firstName}} {{employee.surname}}
-      Seat: {{employee.seat}}
+    <div class="example-box" *ngFor="let employee of seatedEmployees; let i = index" cdkDrag>{{employee.firstName}} {{employee.surname}}
+      Seat: {{i + 1}}
       <button mat-mini-fab (click)="deleteSeatedEmployee(employee.id)">
         X
       </button>

@@ -9,7 +9,8 @@ export enum SeatedEmployeeActionType {
 export class AddSeatedEmployeeAction implements Action {
   readonly type = SeatedEmployeeActionType.ADD_ITEM;
 
-  constructor(public payload: Employee) { }
+  constructor(public payload: Employee) {
+  }
 }
 
 export class DeleteSeatedEmployeeAction implements Action {

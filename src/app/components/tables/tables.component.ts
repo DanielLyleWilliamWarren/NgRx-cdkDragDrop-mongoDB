@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import { Employee } from 'src/app/models/employee.model';
 import { AppState } from 'src/app/store/models/app-state.model';
-import { AddUnSeatedEmployeeAction, DeleteUnSeatedEmployeeAction } from 'src/app/store/actions/todo-task.actions';
-import { DeleteSeatedEmployeeAction } from 'src/app/store/actions/done-task.action';
+import { AddUnSeatedEmployeeAction, DeleteUnSeatedEmployeeAction } from 'src/app/store/actions/unSeated.actions';
+import { DeleteSeatedEmployeeAction } from 'src/app/store/actions/seatedEmployee.action';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-tables',
@@ -14,27 +15,42 @@ import { DeleteSeatedEmployeeAction } from 'src/app/store/actions/done-task.acti
 })
 export class TablesComponent implements OnInit {
 
+  public employees?: Array<Employee>;
   public unSeatedEmployees: Array<Employee>;
   public seatedEmployees: Array<Employee>;
   public newUnSeatedEmployee: Employee = { id: '', firstName: '', surname: '', seat: null, };
-  // public newDoneTaskItem: Employee = { id: '', name: '' };
 
-  constructor(private store: Store<AppState>) { }
+  submitted = false;
+
+  constructor(
+    private store: Store<AppState>,
+    private employeeService: EmployeeService
+  ) { }
 
   ngOnInit() {
-    // console.debug(this.store.select(store => store.unSeated))
-    this.store.select(store => store.unSeated).subscribe((data: Array<Employee>) => {
-      // console.debug('data:', data)
-      this.unSeatedEmployees = data.map(obj => ({
-        ...obj
-      }));
-    });
-    this.store.select(store => store.seated).subscribe((data: Array<Employee>) => {
-      // console.debug('data:', data)
-      this.seatedEmployees = data.map(obj => ({
-        ...obj
-      }));
-    });
+    this.retrieveEmployees();
+    // this.store.select(store => store.unSeated).subscribe((data: Array<Employee>) => {
+    //   this.unSeatedEmployees = data.map(obj => ({
+    //     ...obj
+    //   }));
+    // });
+    // this.store.select(store => store.seated).subscribe((data: Array<Employee>) => {
+    //   this.seatedEmployees = data.map(obj => ({
+    //     ...obj
+    //   }));
+    // });
+  }
+
+  public retrieveEmployees(): void {
+    this.employeeService.getAll()
+      .subscribe(
+        data => {
+          this.unSeatedEmployees = data;
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   public addUnSeatedEmployee() {
@@ -42,11 +58,26 @@ export class TablesComponent implements OnInit {
 
     this.store.dispatch(new AddUnSeatedEmployeeAction(this.newUnSeatedEmployee));
 
-    this.newUnSeatedEmployee = { id: '', firstName: '', surname: '' };
+    const data = {
+      firstName: this.newUnSeatedEmployee.firstName,
+      surname: this.newUnSeatedEmployee.surname,
+      seat: this.newUnSeatedEmployee.seat,
+    };
+    this.employeeService.create(data)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.unSeatedEmployees.push(data);
+          this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
+
+    this.newUnSeatedEmployee = { id: '', firstName: '', surname: '', seat: null };
   }
 
   public deleteUnSeatedEmployee(id: string) {
-    console.debug('call');
     this.store.dispatch(new DeleteUnSeatedEmployeeAction(id));
   }
 
@@ -63,7 +94,6 @@ export class TablesComponent implements OnInit {
   }
 
   public drop(event: CdkDragDrop<Array<string>>) {
-    console.debug('call', event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

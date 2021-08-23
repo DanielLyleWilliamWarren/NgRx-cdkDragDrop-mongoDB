@@ -1,11 +1,13 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Employee } from 'src/app/models/employee.model';
-import { UnSeatedEmployeeAction, UnSeatedEmployeeActionType } from '../actions/todo-task.actions';
+import { EmployeeService } from 'src/app/services/employee.service';
+import { UnSeatedEmployeeAction, UnSeatedEmployeeActionType } from '../actions/unSeated.actions';
 
 const initialState: Array<Employee> = [
   {
     id: "1775935f-36fd-467e-a667-10f75b717f7d",
     firstName: 'Jon',
-    surname: 'Stutely',
+    surname: 'Stuteley',
     seat: 5,
   },
   {

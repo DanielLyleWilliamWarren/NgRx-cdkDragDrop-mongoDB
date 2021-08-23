@@ -1,5 +1,5 @@
 import { Employee } from 'src/app/models/employee.model';
-import { SeatedEmployeeAction, SeatedEmployeeActionType } from '../actions/done-task.action';
+import { SeatedEmployeeAction, SeatedEmployeeActionType } from '../actions/seatedEmployee.action';
 
 const initialState: Array<Employee> = [
   {
